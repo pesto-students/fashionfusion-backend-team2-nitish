@@ -1,48 +1,44 @@
-const express = require("express");
-const dotenv = require("dotenv").config();
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const fileUpload = require("express-fileupload");
-const connectDatabase = require("./configs/dbConnect");
-const cloudinary = require("cloudinary");
-const PORT = process.env.PORT || 4000;
-const path = require("path");
-// const errorMiddleware = require("./middleware/error");
-const  cors = require('cors')
+import express from "express";
+import colors from "colors";
+import dotenv from "dotenv";
+import morgan from "morgan";
+import connectDB from "./config/db.js";
+import authRoutes from "./routes/authRoute.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import cors from "cors";
+
+//configure env
+dotenv.config();
+
+//databse config
+connectDB();
+
+//rest object
 const app = express();
 
-
+//middelwares
+app.use(cors());
 app.use(express.json());
-app.use(cors())
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(fileUpload());
+app.use(morgan("dev"));
 
-// routes
-const auth = require("./routes/authRoute");
-const products = require("./routes/productRoute");
+//routes
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/category", categoryRoutes);
+app.use("/api/v1/product", productRoutes);
 
-
-
-// routes app.use
-app.use("/api/v1", auth);
-app.use("/api/v1", products);
-
-// Database connection 
-connectDatabase();
-
-
-// Setting up cloudinary configuration
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
+//rest api
+app.get("/", (req, res) => {
+  res.send("<h1>Welcome to ecommerce app</h1>");
 });
 
-// app.use("/", (req, res) => {
-//     res.send("App is running.");
-// });
+//PORT
+const PORT = process.env.PORT || 8080;
 
+//run listen
 app.listen(PORT, () => {
-    console.log("Server is running on port", PORT);
+  console.log(
+    `Server Running on ${process.env.DEV_MODE} mode on port ${PORT}`.bgCyan
+      .white
+  );
 });
