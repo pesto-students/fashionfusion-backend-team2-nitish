@@ -96,4 +96,4 @@ npm run dev
 ```
 ## Feedback
 
-Please let us know your thoughts on my app by sending any suggestions or feedback to kumaravishek2015@gmail.com.
+Please let us know your thoughts on my app by sending any suggestions or feedback to jiteshkumar872001@gmail.com.
