@@ -33,7 +33,7 @@ This is a REST API built using Node.js and Express.js for eCommerce. It provides
 #### User Authentication
 - `POST /api/v1/auth/register` -              Register a new user.
 - `POST /api/v1/auth/login` -                 Login with an existing user.
-- `PUT /api/v1/auth/profile` -                Update user profile
+- `PUT /api/v1/auth/profile` -                Update user profile.
 -`POST /api/v1/auth/forgot-password` -        User can create new password with required details.
 
 #### Products
